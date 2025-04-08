@@ -13,6 +13,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Сохраняем полную историю
     
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -27,11 +29,21 @@ jobs:
     
     - name: Build executable
       run: |
-        pyinstaller --onefile --windowed text_diff_gui.py
+        # Сохраняем существующую структуру
+        mkdir -p dist
+        mkdir -p build
+        # Собираем с сохранением архитектуры
+        pyinstaller --onefile --windowed --clean text_diff_gui.py
+        # Проверяем структуру после сборки
+        dir dist
+        dir build
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: text-diff-executable
-        path: dist/text_diff_gui.exe
+        path: |
+          dist/text_diff_gui.exe
+          build/
+          TextDiff.spec
         retention-days: 5 
