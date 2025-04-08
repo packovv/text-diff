@@ -1,0 +1,17 @@
+# Virtual environment
+.venv/
+venv/
+
+# Distribution / packaging
+dist/
+build/
+*.pyc
+__pycache__/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store 
